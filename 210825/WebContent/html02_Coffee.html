@@ -1,0 +1,44 @@
+<!DOCTYPE ht
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Coffee - 서블릿 실습 </title>
+</head>
+<body>
+	<h1>[CAFE.Coffe]</h1>
+	<h2>
+		메뉴판
+		</h1>
+		<form method="post" name="form1" id="form1" action="">
+			<table border="1">
+				<tr>
+					<td>아메리카노 : 2000 won</td>
+					<td>카페라떼: 2000 won</td>
+				</tr>
+				<tr>
+					<td colspan="2"><select name="coffee">
+							<option selected>아메리카노</option>
+							<option>카페라떼</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td><input type="text" placeholder="수량입력" name="cnt">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" value="주문" name="btn1">
+						<input type="submit" value="주문초기화" name="btn2"></td>
+				</tr>
+			</table>
+		</form>
+		<hr>
+		<h3>총 주문 금액:<%=total%></h3>
+
+
+
+
+
+
+
+</body>
+</html>

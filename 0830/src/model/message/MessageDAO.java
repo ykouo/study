@@ -4,74 +4,130 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
 import model.common.JDBC;
 
 public class MessageDAO {
-	
-	// select All 
-	public  ArrayList<MessageVO> getDBList() {	
+	// select all
+	public ArrayList<MessageVO> getDBList(){
 		Connection conn = JDBC.connect(); // 연결
-		ArrayList<MessageVO> datas = new ArrayList();
-		PreparedStatement pstmt =null;
-		try{
-			String sql="select * from message order by mnum desc";// 최근 게시글 상단 배치 
+		ArrayList<MessageVO> datas = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "SELECT * FROM MESSAGE ORDER BY MNUM DESC"; // 최근 게시글 상단 배치 
 			pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				MessageVO vo = new MessageVO();
-				vo.setContent(rs.getString("content"));
 				vo.setMnum(rs.getInt("mnum"));
 				vo.setTitle(rs.getString("title"));
-				vo.setWdate(rs.getDate("wdate"));
+				vo.setContent(rs.getString("content"));
 				vo.setWriter(rs.getString("writer"));
+				vo.setWdate(rs.getDate("wdate"));
 				datas.add(vo);
-			}
-			rs.close();
-			
+			}rs.close();
 		}catch(Exception e) {
 			System.out.println("getDBList()에서 출력");
 			e.printStackTrace();
 		}finally {
-			JDBC.disconnect(conn, pstmt);
+			JDBC.disconnect(pstmt, conn);
 		}
 		return datas;
-		
-		
 	}
-	public MessageVO getDBData(MessageVO vo) {	// 유지보수를 위해 인자로는 vo를 받는다. 
-		Connection conn = JDBC.connect(); // 연결
+
+	// select one
+	public MessageVO getDBData(MessageVO vo) {
+		Connection conn = JDBC.connect();
 		MessageVO data = null;
-		PreparedStatement pstmt =null;
-		try{
-			String sql = "select * from message where mnum=?"; 
+		PreparedStatement pstmt = null;
+
+		try {
+			String sql ="SELECT * FROM MESSAGE WHERE MNUM=?";	
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, vo.getMnum());
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
-				data = new MessageVO();
-				data.setContent(rs.getString("content"));
+				data=new MessageVO();
 				data.setMnum(rs.getInt("mnum"));
 				data.setTitle(rs.getString("title"));
-				data.setWdate(rs.getDate("wdate"));
+				data.setContent(rs.getString("content"));
 				data.setWriter(rs.getString("writer"));
-			}
-			rs.close();
+				data.setWdate(rs.getDate("wdate"));
+			}rs.close();
+
 		}catch(Exception e) {
 			System.out.println("getDBData()에서 출력");
 			e.printStackTrace();
 		}finally {
-			JDBC.disconnect(conn, pstmt);
+			JDBC.disconnect(pstmt, conn);
 		}
 		return data;
 	}
-	public void insertDB(MessageVO vo) {	
-	}
-	public void Update(MessageVO vo) {	
-	}
-	public void delete(MessageVO vo) {	
+	
+	// insert
+	public boolean insertDB(MessageVO vo) {
+		Connection conn = JDBC.connect();
+		boolean res = false;
+		PreparedStatement pstmt =null;
+		try {
+			String sql = "INSERT INTO MESSAGE VALUES((SELECT NVL(MAX(MNUM),0)+1 FROM MESSAGE),?,?,?,SYSDATE)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getWriter());
+			pstmt.setString(2, vo.getTitle());
+			pstmt.setString(3, vo.getContent());
+			pstmt.executeUpdate(); 
+			res=true;
+		}catch(Exception e) {
+			System.out.println("insertDB()에서 출력");
+			e.printStackTrace();
+		}finally {
+			JDBC.disconnect(pstmt, conn);
+		}
+		return res;
+
 	}
 	
+	// delete
+	public boolean deleteDB(MessageVO vo) {
+		Connection conn = JDBC.connect();
+		PreparedStatement pstmt =null;
+		boolean res = false;
+		try {
+			String sql = "DELETE FROM MESSAGE WHERE MNUM=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getMnum());
+			pstmt.executeUpdate();
+			res =true;
+		}catch(Exception e) {
+			System.out.println("deleteDB()에서 출력");
+			e.printStackTrace();
+		}finally {
+			JDBC.disconnect(pstmt, conn);
+		}
+		return res;
+	}
 	
-	
+	// update
+	public boolean updateDB(MessageVO vo) {
+		Connection conn = JDBC.connect();
+		boolean res = false;
+ 		PreparedStatement pstmt = null;
+		try {
+			String sql ="UPDATE MESSAGE SET WRITER=?,TITLE=?,CONTENT=?,WDATE=SYSDATE WHERE MNUM=?";	
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,vo.getWriter());
+			pstmt.setString(2, vo.getTitle());
+			pstmt.setString(3, vo.getContent());
+			pstmt.setInt(4, vo.getMnum());
+			pstmt.executeUpdate();
+			res=true;
+		}catch(Exception e) {
+			System.out.println("updateDB()에서 출력");
+			e.printStackTrace();
+			// res = false;
+		}finally {
+			JDBC.disconnect(pstmt, conn);
+		}
+		return res;
+	}
+
 }

@@ -2,24 +2,17 @@ package model.message;
 
 import java.sql.Date;
 
-public class MessageVO {	
-	private int mnum;
-	private String writer;
-	private String title;
-	private String content;
+public class MessageVO {
+	int mnum;
+	String title;
+	String content;
+	String writer;
 	Date wdate;
-	
 	public int getMnum() {
 		return mnum;
 	}
 	public void setMnum(int mnum) {
 		this.mnum = mnum;
-	}
-	public String getWriter() {
-		return writer;
-	}
-	public void setWriter(String writer) {
-		this.writer = writer;
 	}
 	public String getTitle() {
 		return title;
@@ -33,6 +26,12 @@ public class MessageVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
 	public Date getWdate() {
 		return wdate;
 	}
@@ -41,11 +40,10 @@ public class MessageVO {
 	}
 	@Override
 	public String toString() {
-		return "MessageVO [mnum=" + mnum + ", writer=" + writer + ", title=" + title + ", content=" + content + "]";
-	} 
-	
-	
-	
-	
-	
+		return "MessageVO [mnum=" + mnum + ", title=" + title + ", content=" + content + ", writer=" + writer
+				+ ", wdate=" + wdate + "]";
+	}
+
+
+
 }

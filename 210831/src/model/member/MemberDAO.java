@@ -28,7 +28,7 @@ public class MemberDAO {
 	// select one
 	public MemberVO getMemData(MemberVO vo) {
 		Connection conn = JDBC.connect();
-		MemberVO data=null;
+		MemberVO member = null;
 		PreparedStatement pstmt=null;
 		try{
 			String sql ="SELECT * FROM MEMBER WHERE MID=? AND MPW=?";
@@ -37,10 +37,10 @@ public class MemberDAO {
 			pstmt.setString(2, vo.getMpw());
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
-				data = new MemberVO();
-				data.setMnum(rs.getInt("mnum"));
-				data.setMid(rs.getString("mid"));
-				data.setMpw(rs.getString("mpw"));
+				member = new MemberVO();
+				member.setMnum(rs.getInt("mnum"));
+				member.setMid(rs.getString("mid"));
+				member.setMpw(rs.getString("mpw"));
 			}rs.close();
 		}catch(Exception e) {
 			System.out.println("gtMemData()»Æ¿Œ");
@@ -48,7 +48,7 @@ public class MemberDAO {
 		}finally {
 			JDBC.disconnect(conn, pstmt);
 		}
-		return data;
+		return member;
 	}
 
 	public boolean insertMember(MemberVO vo) {

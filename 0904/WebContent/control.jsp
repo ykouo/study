@@ -29,7 +29,7 @@
 			session.setAttribute("user", user);
 			response.sendRedirect("control.jsp?action=main"); // 로그인 완료되면 메인페이지로 
 		}else{
-	out.println("<script>alert('로그인 실패!');history.go(-1);</script>");
+			out.println("<script>alert('로그인 실패!');history.go(-1);</script>");
 		}
 	}
 	// 로그아웃
@@ -104,7 +104,7 @@
 		String content = request.getParameter("content"); 
 		System.out.println("condition : "+ condition);
 		System.out.println("content : "+ content);
-	
+	 
 		ArrayList<PostVO> searchList = postdao.searchPostList(condition, content);
 		
 		/* System.out.println("searchList : " + searchList); */

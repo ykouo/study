@@ -44,7 +44,10 @@
 			</tr>
 	<%if(session.getAttribute("user") != null){ %>	
 			<tr>
+			<% MemVO user = (MemVO)session.getAttribute("user") ;
+				if(user.getMname().equals(post.getPwriter())) {%> <!-- 만약 유저이름과 작성자가 동일하지 않으면  -->
 				<td colspan="2"><input type="submit" value="수정">
+			<%} %>
 			</td>			
 			</tr>
 		</table>

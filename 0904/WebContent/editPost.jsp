@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="post" class="model.post.PostVO" scope="request"/>
+<jsp:useBean id="user" class="model.mem.MemVO" scope="session" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,9 @@
 			return;
 		}
 	}
+
+		
+	
 </script>
 </head>
 <body>
@@ -25,8 +29,7 @@
 	<form action="control.jsp" method="post" name="form1">
 		<input type="hidden" name="action" value="updatePost">
 		<input type="hidden" name="pnum" value="<%=post.getPnum() %>" >
-		<table>
-		
+		<table>		
 			<tr>
 				<td>Title</td>
 				<td><input type="text" name ="ptitle" placeholder="제목작성" value="<%= post.getPtitle()%>"></td> <!-- name까먹지말자... -->

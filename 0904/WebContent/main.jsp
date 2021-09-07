@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*,model.post.*"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="mytag"  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <!-- 태그라이브러리 달아야함 -->    
 
 <jsp:useBean id="post" class="model.post.PostVO" scope="request" />
 <jsp:useBean id="postList" class="java.util.ArrayList" scope="request" />  
@@ -23,24 +24,23 @@ function check(pnum){
 
 <h1>메인화면입니다.</h1>
 
-<% 
 
-if(session.getAttribute("user")==null){ %>
+<c:if test="${user==null}">
 <hr>
 	<button onclick="location.href='login.jsp'">로그인</button>
 <br>
 	<button onclick="location.href='join.jsp'">회원가입</button>
 <hr>
-<%}else{
-%>
+</c:if>
+<c:if test="${user!=null}">
+
 	<mytag:logout/>
-	<form action="control.jsp" method="post">
-		<input type="hidden" name = "action" value="myPage">
-		<input type="submit" value="마이페이지">
-	</form>
-<%}%>
+	
+</c:if>
 <h3>게시글 보기</h3>
+
 <hr>
+
 <form action="control.jsp" method="post">
 <input type="hidden" name="action" value="search">
 <select name = "condition">
@@ -50,7 +50,9 @@ if(session.getAttribute("user")==null){ %>
 <input name ="content" type="text" placeholder="검색내용입력">
 <input type="submit" value="검색">
 </form>
+
 <hr>
+
 <table>
 	<tr>
 		<th>번호</th>
@@ -59,32 +61,30 @@ if(session.getAttribute("user")==null){ %>
 		<th>내용</th>
 		<th>작성일</th>
 	</tr>
-	<%
-	if(postList.size()==0){ 
-	%>
+
+	<c:if test="${postList.size()==0}">
 			<tr><td cospan = "5"> 게시글 목록이 텅!비어있습니다:0 </td></tr>
-	<%
-	}
-		for (PostVO vo : (ArrayList<PostVO>)postList) { 
-	%>
-	
-	<tr>
-		<td><%=vo.getPnum()%></td>
-		<td><a href="javascript:check(<%=vo.getPnum()%>)"><%=vo.getPtitle()%></a></td>
-		<td><%=vo.getPwriter() %></td>
-		<td><%=vo.getPcontent()%></td>
-		<td><%=vo.getPdate()%></td>  
-	</tr>
-	<%	
-	}
-	%>
+	</c:if>
+	<c:if test="${postList.size()!=0}">
+		<c:forEach var="vo" items="${postList}"> 
+			<tr>
+				<td>${vo.getPnum()}</td>
+				<td><a href="javascript:check(${vo.getPnum()})">${vo.getPtitle()}</a></td>
+				<td>${vo.getPwriter()}</td>
+				<td>${vo.getPcontent()}</td>
+				<td>${vo.getPdate()}</td>  
+			</tr>
+		</c:forEach>
+	</c:if>
 </table>	
+
 <hr>
-<% if(session.getAttribute("user")!=null){ %>
-<form action="control.jsp" method="post">
-	<input type="hidden" name="action" value="posting">
-	<input type="submit" value="글쓰기">
-</form>
-<%}%>
+
+<c:if test="${user!=null}">
+	<form action="control.jsp" method="post">
+		<input type="hidden" name="action" value="posting">
+		<input type="submit" value="글쓰기">
+	</form>
+</c:if>
 </body>
 </html>

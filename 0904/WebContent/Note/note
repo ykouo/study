@@ -1,0 +1,70 @@
+서버 프로그래밍의 핵심 "Servlet"
+	→ HttpServlet을 상속받아 만든 클래스 
+	→ 특수한 기능을 수행하는 클래스 
+	→ @ 어노테이션 설정이 상단에 위치함
+java코드 내부에 html코드 작성가능
+→ html코드를 작성하는데, 내부에 java코드를 작성할수 있는 기술
+=> JSP
+	: 후에 Servlet.java로 변경될 코드들 ★
+
+☆ JSP 내장객체 ☆
+	: request, response, session, application ... 
+	→ 설계
+	1) 페이지 흐름 
+	2) 유지되어야 하거나, 전달되어야하는 데이터 파악
+		→ 유지되어야하는 데이터는 언제까지 유지되어야하는지 파악
+			
+<%@  지시어 실습 
+<jsp:액션태그 실습 
+	→ useBean 액션때문에 scope개념
+	session: 로그인, 장바구니 
+	application : 방문자수 , 판매금액, 조회수 
+
+[ DB연동 ]  
+	① 컨트롤러 변화
+	  Model : model.테이블명-DAO,VO
+	  View : .html → .jsp(java코드 , 알고리즘 제거하는 것이 목표 ) 
+	  						→ 커스텀태그,jstl, EL → 템플릿 사용
+	② View역할을 하는 .jsp 페이지 상단에 <% 으로 java로 알고리즘 구현 
+	  (클라이언트(사용자)가 브러우저로 요청 View --> Controller -->Model 
+	  	페이지와 페이지 사이마다 컨트롤러가 필요함 )
+	③ .jsp로 Controller 부분을 분리 
+		→ 원래는 Controller 역할의 .jsp페이지가 다수 필요  
+		→ 하나의 페이지에 함께 작성하여 관리
+		→ action요청 파라미터 활용!
+
+[ 복습실습 ] 	
+	- index.jsp
+	- hidden 
+	- name 맞추기 / login확인
+	- forEach에 대하여 <c:jstl응용
+		+EL
+	- 커스텀태그 
+		→ 기능에 따라서 캡슐화 	
+		=> if문으로 로그인 or 로그아웃 : jstl  --> 아직 안배움
+			login.tag logout.tag 로 대체해서 사용해보자
+	- 메인페이지에 로그인화면을 함께 구성
+	
+	
+	모든기능을 CRUD 에서 해결 - 비즈니스 메서드, 핵심 로직
+	insert
+	selectAll : 전체결과보기, 검색결과만 보기 
+	selectOne(VO) : 
+	update(VO): 
+	delete: 
+	
+[ 실습 ]
+1. 로그인, 로그아웃 
+	1)메인에 들어갈것
+	2) 커스텀태그
+2. for-> jstl로 교체
+3. mvc를 분리
+4. control.jsp action파라미터로 확인 : 1개만!
+5. DBMS자유. 각테이블마다 CRUD구현
+	-회원
+	-게시글/ 상품(재고개념있음)
+	- 작성자검색, 상품명검색
++) 템플릿 적용			
+	
+	
+	

@@ -33,7 +33,7 @@ public class InitialMember implements ServletContextListener{
 		datas.add(new Member("아리",null));
 		datas.add(new Member("소나",null));
 	
-	// 현재 만든 데이터들은 톰캣이 시작될떄 생성된것 
+	// 현재 만든 데이터들은 톰캣이 시작될때 생성된것 
 	// scope: application에 저장하고 싶다 ! 
 	ServletContext context = sce.getServletContext();
 	context.setAttribute("members", datas); // application scope에 저장됨!!!

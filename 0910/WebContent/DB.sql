@@ -1,0 +1,11 @@
+SELECT * FROM ALL_TABLES;
+
+CREATE TABLE COFFEE(
+	NAME VARCHAR(30),
+	PRICE INT 
+);
+
+INSERT INTO COFFEE values ('아메리카노',4100);
+INSERT INTO COFFEE values ('딸기크림푸라푸치노',6800);
+INSERT INTO COFFEE values ('피치레몬블렌디드',6100);
+INSERT INTO COFFEE values ('말차우유',4000);

@@ -1,0 +1,123 @@
+SELECT * FROM ALL_TABLES;
+DROP TABLE MEMBER; 
+DROP TABLE FREEBOARD;
+DROP TABLE STUDYBOARD;
+DROP TABLE NOTICEBOARD;
+DROP TABLE CONCERM;
+DROP TABLE FREECOMMENT;
+DROP TABLE STUDYCOMMENT;
+DROP TABLE NOTICECOMMENT;
+
+-- 유저 테이블
+CREATE TABLE MEMBER(
+	MID VARCHAR(50) PRIMARY KEY, 		 -- 회원 아이디
+	MPW VARCHAR(50) NOT NULL,			 -- 회원 비밀번호
+	MNAME VARCHAR(50) NOT NULL,			 -- 회원 닉네임
+	MEMAIL VARCHAR(50) NOT NULL,		 -- 회원 이메일	
+	ROLE VARCHAR(20) NOT NULL			 -- 사용자/관리자
+);
+
+INSERT INTO MEMBER VALUES ('hana','11','하나','hana11@naver.com','user');
+INSERT INTO MEMBER VALUES ('admin','1004','관리자','admin@helper.com','admin');
+
+-- ====================================================================
+-- 게시글 테이블 
+CREATE TABLE FREEBOARD(
+	PNUM INT PRIMARY KEY, 				 -- 게시글 고유 번호
+	PTITLE VARCHAR(50) NOT NULL,		 -- 게시글 제목 
+	PCONTENT VARCHAR(1000) NOT NULL,	 -- 게시글 내용
+	PDATE DATE DEFAULT SYSDATE NOT NULL, -- 게시글 작성일자 
+	MNAME VARCHAR(50) NOT NULL,			 -- 회원 닉네임
+	MID VARCHAR(50) NOT NULL,			 -- 회원 아이디
+	CNT INT DEFAULT 0 NOT NULL, 					 -- 조회수
+	CATEGORY VARCHAR(50) DEFAULT '자유게시판' NOT NULL 		 -- 카테고리 
+);
+-- 게시글 리스트 보기
+SELECT * FROM FREEBOARD ORDER BY PNUM DESC; --최신글 
+SELECT * FROM FREEBOARD WHERE PTITLE= LIKE '%H%' ORDER BY PNUM DESC;  --수정
+-- 게시글 상세 보기
+SELECT * FROM FREEBOARD WHERE PNUM = 1 ;
+
+-- 게시글 작성
+INSERT INTO FREEBOARD VALUES ((SELECT NVL(MAX(PNUM),0)+1 FROM FREEBOARD),
+'Hello','hellow world',SYSDATE,'hana','하나',0);
+
+INSERT INTO FREEBOARD (PNUM,PTITLE,PCONTENT,MNAME,MID) VALUES ((SELECT NVL(MAX(PNUM),0)+1 FROM FREEBOARD),
+'Hello','hellow world','하나','hana');
+INSERT INTO FREEBOARD (PNUM,PTITLE,PCONTENT,MNAME,MID) VALUES ((SELECT NVL(MAX(PNUM),0)+1 FROM FREEBOARD),
+'Welcome','Welcome HAH Conding Community','두리','duri');
+
+-- 수정
+UPDATE FREEBOARD SET PTITLE='HI',PCONTENT='★★★★★★★★★' WHERE PNUM=1;
+
+-- 삭제
+DELETE FROM FREEBOARD WHERE PNUM ='2' AND MID='duri';
+
+CREATE TABLE STUDYBOARD(
+	PNUM INT PRIMARY KEY, 				 			-- 게시글 고유 번호
+	PTITLE VARCHAR(50) NOT NULL,		 			-- 게시글 제목 
+	PCONTENT VARCHAR(1000) NOT NULL,	 			-- 게시글 내용
+	PDATE DATE DEFAULT SYSDATE NOT NULL, 			-- 게시글 작성일자 
+	MNAME VARCHAR(50) NOT NULL,			 			-- 회원 닉네임
+	MID VARCHAR(50) NOT NULL,			 			-- 회원 아이디
+	CNT INT DEFAULT 0 NOT NULL, 					-- 조회수
+	CATEGORY VARCHAR(50) DEFAULT 'Study' NOT NULL 	-- 카테고리 
+);
+CREATE TABLE NOTICEBOARD(
+	PNUM INT PRIMARY KEY, 						 	-- 게시글 고유 번호
+	PTITLE VARCHAR(50) NOT NULL,		 		 	-- 게시글 제목 
+	PCONTENT VARCHAR(1000) NOT NULL,			 	-- 게시글 내용
+	PDATE DATE DEFAULT SYSDATE NOT NULL, 		 	-- 게시글 작성일자 
+	MNAME VARCHAR(50) NOT NULL,			 	   	 	-- 회원 닉네임
+	MID VARCHAR(50) NOT NULL,					 	-- 회원 아이디
+	CNT INT DEFAULT 0 NOT NULL, 				 	-- 조회수
+	CATEGORY VARCHAR(50) DEFAULT '공지사항' NOT NULL 	-- 카테고리 
+);
+
+
+
+
+-- ====================================================================
+-- 관심글 게시글 테이블 
+CREATE TABLE CONCERM(
+	FAVNUM INT PRIMARY KEY,				 -- 관심 게시글 고유 번호  
+	MID VARCHAR(50) NOT NULL,			 -- 회원 아이디
+	PNUM INT NOT NULL, 					 -- 게시글 번호
+	CATEGORY VARCHAR(50) NOT NULL		 -- 카테고리
+
+);
+-- 관심글 목록 보기
+SELECT * FROM CONCERM ORDER BY FAVNUM DESC;
+-- 관심글 등록 
+INSERT INTO CONCERM VALUES ((SELECT NVL(MAX(FAVNUM),0)+1 FROM CONCERM),'hana','1','자유게시판');
+-- 관심글 삭제 
+DELETE FROM CONCERM WHERE FAVNUM =1 AND MID='hana';
+
+-- ====================================================================
+-- 댓글테이블 
+CREATE TABLE FREECOMMENT(
+	CNUM INT PRIMARY KEY,				 -- 댓글 고유 번호 
+	COMMENT VARCHAR(200) NOT NULL,		 -- 댓글 내용 
+	CDATE DATE DEFAULT SYSDATE NOT NULL, -- 댓글 작성 일자
+	PNUM INT NOT NULL,					 -- 게시글 번호  
+	MNAME VARCHAR(50) NOT NULL, 		 -- 회원 닉네임
+	MID VARCHAR(50) NOT NULL			 -- 회원 아이디 
+);
+
+CREATE TABLE STUDYCOMMENT(
+	CNUM INT PRIMARY KEY,				 -- 댓글 고유 번호 
+	COMMENT VARCHAR(200) NOT NULL,		 -- 댓글 내용 
+	CDATE DATE DEFAULT SYSDATE NOT NULL, -- 댓글 작성 일자
+	PNUM INT NOT NULL,					 -- 게시글 번호  
+	MNAME VARCHAR(50) NOT NULL, 		 -- 회원 닉네임
+	MID VARCHAR(50) NOT NULL			 -- 회원 아이디 
+);
+
+CREATE TABLE NOTICECOMMENT(
+	CNUM INT PRIMARY KEY,				 -- 댓글 고유 번호 
+	COMMENT VARCHAR(200) NOT NULL,		 -- 댓글 내용 
+	CDATE DATE DEFAULT SYSDATE NOT NULL, -- 댓글 작성 일자
+	PNUM INT NOT NULL,				 	 -- 게시글 번호  
+	MNAME VARCHAR(50) NOT NULL, 		 -- 회원 닉네임
+	MID VARCHAR(50) NOT NULL			 -- 회원 아이디 
+);

@@ -22,7 +22,7 @@
 		</tr>
 		<tr>
 			<td>비밀번호*</td>
-			<td><input type="password" name="mpw" placeholder="비밀번호입력" required="required"></td>
+			<td><input type="password" name="userpw" placeholder="비밀번호입력" required="required"></td>
 		</tr>
 		<tr>
 			<td colspan="2"><input type="submit" value="회원가입하기"></td>

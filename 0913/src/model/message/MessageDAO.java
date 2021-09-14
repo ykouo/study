@@ -17,6 +17,7 @@ public class MessageDAO {
 		ArrayList<MessageSet> datas = new ArrayList<MessageSet>();
 		conn = DBCP.connect();
 		String sql;
+		System.out.println("userid="+userid +" mcnt="+mcnt);
 		try {
 			
 			// userid가 null이거나, ""공백이라면 ==> 로그인 하지 않았다면
@@ -28,7 +29,7 @@ public class MessageDAO {
 			}
 			// 로그인 했다면 userid값을 넘겨받아 해당 userid를 가진 유저가 쓴 글을 보여준다. 
 			else {
-				sql = "SELECT * FROM MESSAGE WHERE USERID =? ,ROWNUM <= ?";
+				sql = "SELECT * FROM MESSAGE WHERE USERID =? AND ROWNUM <= ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, userid);
 				pstmt.setInt(2, mcnt);
@@ -64,7 +65,6 @@ public class MessageDAO {
 					r.setRmsg(rrs.getString("rmsg"));
 					rlist.add(r); // 미리 선언해둔 rlist 리스트에 댓글정보를 담고있는 ReplybVO객체를 담는다.
 					rcnt++; // 댓글카운트수를 증가시킨다.
-				
 				}
 				m.setReplycount(rcnt); // 댓글 카운트수 셋팅
 				
@@ -85,17 +85,64 @@ public class MessageDAO {
 		}
 		return datas;
 	}
+	
+	public MessageSet selectOne(MessageVO vo) {
+		conn = DBCP.connect();
+		MessageVO data = null;
+		MessageSet result=new MessageSet();
+		
+		// MID / USERID / MSG / FAVCOUNT / REPLYCOUNT / MDATE
+		ArrayList<ReplyVO> rlist =new ArrayList<ReplyVO>();
+		
+		String sql = "SELECT * FROM MESSAGE WHERE MID=?)";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getMid());	
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				data = new MessageVO();
+				data.setMid(rs.getInt("mid"));
+				data.setUserid(rs.getString("userid"));
+				data.setMsg(rs.getString("msg"));
+				data.setFavcount(rs.getInt("favcount"));
+				data.setMdate(rs.getDate("mdate"));
+				// ------------ 댓글 ---------------------------
+				String rsql = "SELECT * FROM REPLY WHERE MID=?";
+				pstmt=conn.prepareStatement(rsql);
+				pstmt.setInt(1, rs.getInt("mid"));
+				int rcnt=0; // reqlycount 를 담을 변수 
+				ResultSet rrs = pstmt.executeQuery();
+				while(rrs.next()) {
+					ReplyVO r = new ReplyVO();
+					r.setRid(rrs.getInt("rid"));
+					r.setMid(rrs.getInt("mid"));
+					r.setUserid(rrs.getString("userid"));
+					r.setRdate(rrs.getDate("rdate"));
+					r.setRmsg(rrs.getString("rmsg"));
+					rlist.add(r); // 미리 선언해둔 rlist 리스트에 댓글정보를 담고있는 ReplybVO객체를 담는다.
+					rcnt++; // 댓글카운트수를 증가시킨다.
+				}
+				data.setReplycount(rcnt);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("여기는 MessageDAO의 selectOne");
+		}finally {
+			DBCP.disconnect(conn, pstmt);
+		}
+		return result;	
+	}
+	
 	public boolean insert(MessageVO vo) {
 		conn = DBCP.connect();
 		boolean res = false;
-		String sql = "INSERT INTO MESSAGE VALUES ((SELECT NVL(MAX(MID),0)+1 FROM MESSAGE),?,?,?,?,SYSDATE)";
+		// MID / USERID / MSG / FAVCOUNT / REPLYCOUNT / MDATE
+		String sql = "INSERT INTO MESSAGE (MID,USERID,MSG,MDATE) VALUES ((SELECT NVL(MAX(MID),0)+1 FROM MESSAGE),?,?,SYSDATE)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getUserid());
 			pstmt.setString(2,vo.getMsg());
-			pstmt.setInt(3,vo.getFavcount());
-			pstmt.setInt(4, vo.getReplycount());
 			pstmt.executeUpdate();
 			res=true;
 		}catch(Exception e) {

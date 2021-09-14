@@ -32,7 +32,7 @@ public class EncFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		request.setCharacterEncoding(encoding);
+		request.setCharacterEncoding(encoding); 
 		chain.doFilter(request, response);
 	}
 

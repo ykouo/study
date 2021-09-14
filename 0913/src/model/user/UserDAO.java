@@ -35,21 +35,18 @@ public class UserDAO {
 	
 
 	
-	public UserVO login(UserVO vo) {
+	public boolean login(UserVO vo) {
 		conn = DBCP.connect();
-		UserVO user =null;
-		String sql = "SELECT USERID,USERPW FROM USERINFO WHERE USERID=? AND USERPW=?";
+		String sql = "SELECT USERID,USERPW FROM USERINFO WHERE USERID=?";
+		boolean  res= false;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getUserid());
-			pstmt.setString(2, vo.getUserpw());
+			//pstmt.setString(2, vo.getUserpw());
 			rs = pstmt.executeQuery();		
-			if(rs.next()) {
-				user=new UserVO();
-				user.setUserid(rs.getString("userid"));
-				user.setUserpw(rs.getString("userpw"));
-				user.setUsername(rs.getString("username"));
-				user.setUdate(rs.getDate("udate"));
+			rs.next();
+			if(rs.getString("userpw").equals(vo.getUserpw())) {
+				res=true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -57,8 +54,9 @@ public class UserDAO {
 		finally {
 			DBCP.disconnect(conn, pstmt);
 		}
-		return user;
+		return res;
 	}
+	
 	public ArrayList<UserVO> selectAll() {
 		ArrayList<UserVO> datas = new ArrayList<UserVO>();
 		conn = DBCP.connect();

@@ -9,6 +9,7 @@
 			<input type="hidden" name="cnt" value="${cnt}">
 			<input type="hidden" name="mcnt" value="${mcnt}">
 			<input type="hidden" name="userid" value="${seUser}">
+			<input type="hidden" name="selUser" value="${selUser}">
 			<input type="hidden" name="rid" value="${rid}">
 			<input type="hidden" name="mid" value="${mid}">
 			<input type="submit" value="Reply삭제">

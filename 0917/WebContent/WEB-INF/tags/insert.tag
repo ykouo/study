@@ -11,6 +11,7 @@
 			<input type="hidden" name="mcnt" value="${mcnt}">
 			<input type="hidden" name="mid" value="${mid}">
 			<input type="hidden" name="cnt" value="${cnt}">
+			<input type="hidden" name="selUser" value="${selUser}">
 			<input type="text" name="msg">
 			<input type="submit" value="Msg추가">		
 		</form>
@@ -25,6 +26,7 @@
 			<input type="hidden" name="mcnt" value="${mcnt}">
 			<input type="hidden" name="cnt" value="${cnt}">
 			<input type="hidden" name="userid" value="${seUser}">
+			<input type="hidden" name="selUser" value="${selUser}">
 			<input type="hidden" name="mid" value="${mid}">
 			<input type="text" name="rmsg">
 			<input type="submit" value="Reply추가">

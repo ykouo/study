@@ -41,12 +41,12 @@ function newWin(){
 <!-- 더보기 버튼  -->
 <c:if test="${selUser!=null}">
  <%-- 	<c:if test="${cnt<userCnt}">  &cnt=${cnt+2} --%>
-	<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}&selUser=${selUser}">${selUser}님글더보기+</a>
+	<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}&selUser=${selUser}">더보기+</a>
 
 </c:if>
 <c:if test="${selUser==null}">
  <%-- 	<c:if test="${cnt<userCnt}">  --%>
-	<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}">전체글 더보기+</a>
+	<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}">더보기+</a>
 
 </c:if>
 <!-- 게시글 리스트 시작  -->

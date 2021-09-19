@@ -39,6 +39,7 @@ public class MainAction implements Action {
 			cnt= Integer.parseInt(cnt1);
 		}
 	
+	
 		MessageDAO mDAO = new MessageDAO();
 		UserDAO uDAO = new UserDAO();
 		ArrayList<MessageSet> datas = mDAO.selectAll(selUser, mcnt);
@@ -46,12 +47,20 @@ public class MainAction implements Action {
 		
 		int userCnt = mDAO.getCnt(selUser);
 		
+	
+		
+		
 		request.setAttribute("datas", datas);
 		request.setAttribute("newUsers", newUsers);
 		request.setAttribute("selUser", selUser);
 		request.setAttribute("mcnt", mcnt);
 		request.setAttribute("userCnt",userCnt);
 		request.setAttribute("cnt", cnt);
+		
+		System.out.println("mcnt : " + mcnt);
+		System.out.println("newUsers : " + newUsers);
+		
+		
 		
 		forward.setRedirect(false); // 헤더 유지..는 되는뎅 그럼 이다음.. 갈라져.. selUser랑 seUser 두갈래로..
 		forward.setPath("main.jsp");

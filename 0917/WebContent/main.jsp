@@ -40,14 +40,14 @@ function newWin(){
 
 <!-- 더보기 버튼  -->
 <c:if test="${selUser!=null}">
- <%-- 	<c:if test="${cnt<userCnt}">  &cnt=${cnt+2} --%>
-	<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}&selUser=${selUser}">더보기+</a>
-
+  	<c:if test="${cnt<userCnt}">  
+	<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}&selUser=${selUser}&cnt=${cnt+2}">더보기+</a>
+	</c:if>
 </c:if>
 <c:if test="${selUser==null}">
- <%-- 	<c:if test="${cnt<userCnt}">  --%>
-	<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}">더보기+</a>
-
+ 	<c:if test="${cnt<userCnt}">  
+		<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}&cnt=${cnt+2}">더보기+</a>
+	</c:if>
 </c:if>
 <!-- 게시글 리스트 시작  -->
  <ul class="list">
@@ -82,7 +82,7 @@ function newWin(){
 <h3>신규회원목록</h3>
 <hr color="tomato">
 <ol>
-	<c:forEach var="u" items="${newUsers}">
+	<c:forEach var="u" items="${newUsers}"> 
 		<li><a href="main.do?&mcnt=${mcnt}&selUser=${u.userid}">${u.userid}</a>님 가입완료</li>
 	</c:forEach>
 </ol>

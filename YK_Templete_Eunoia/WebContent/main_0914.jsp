@@ -1,3 +1,10 @@
+<%@page import="org.apache.catalina.User"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="java.util.*,model.post.*"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="mytag"  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <!-- 태그라이브러리 달아야함 -->    
+
+
 <!DOCTYPE HTML>
 <!--
 	Editorial by HTML5 UP
@@ -6,12 +13,12 @@
 -->
 <html>
 <head>
-<title>Eunoia</title>
+<title>main - 로그인 / 리스트 </title>
+
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="assets/css/main.css" />
-<link rel="icon" href="images/rose1.ico" />
 </head>
 <body class="is-preload">
 
@@ -39,129 +46,90 @@
 					</ul>
 				</header>
 
-				<!-- Banner -->
-				<section id="banner">
-					<div class="content">
-						<header>
-							<h1>Eunoia </h1>
-							<p>I'll decide how I feel. I'll be happy today.</p>
-						</header>
-						<p>
-							You can not stay in your corner of the forest waiting for others
-							to come to you.<br> You have to go to them sometimes.
-						</p>
-						<ul class="actions">
-							<li><a href="#" class="button big">Learn More</a></li>
-						</ul>
-					</div>
-					<span class="image object"> <img src="images/rabbit1.jpg"
-						alt="토끼장식품사진" />
-					</span>
-				</section>
-
-				<!-- Section -->
+				<!-- Content -->
 				<section>
-					<header class="major">
-						<h2>타이틀2</h2>
+					<header class="main">
+						<h1>MAIN</h1>
 					</header>
-					<div class="features">
-						<article>
-							<span class="icon fa-gem"></span>
-							<div class="content">
-								<h3>소 타이틀 1</h3>
-								<p>내용1</p>
-							</div>
-						</article>
-						<article>
-							<span class="icon solid fa-paper-plane"></span>
-							<div class="content">
-								<h3>소 타이틀 2</h3>
-								<p>내용2</p>
-							</div>
-						</article>
-						<article>
-							<span class="icon solid fa-rocket"></span>
-							<div class="content">
-								<h3>소 타이틀 3</h3>
-								<p>내용3</p>
-							</div>
-						</article>
-						<article>
-							<span class="icon solid fa-signal"></span>
-							<div class="content">
-								<h3>소 타이틀 4</h3>
-								<p>내용4</p>
-							</div>
-						</article>
-					</div>
-				</section>
+					
+					<c:choose>
+					<h3>로그인</h3>
+						<c:when test="${selUser eq null}">
+							<form action="control_0914.jsp" method="post">
+								<input type="hidden" name="action" value="login">
+								<table>
+									<tr>
+										<td>아이디</td>
+										<td><input type="text" name="userid" placeholder="아이디입력"></td>
+									</tr>
+									<tr>
+										<td>비밀번호</td>
+										<td><input type="password" name="userpw"
+											placeholder="비밀번호입력"></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input type="submit" value="login"></td>
+									</tr>
+								</table>
+							</form>
+							<button onclick="location.href='insertUser_0914.jsp'">회원가입</button>
+						</c:when>
+						<c:otherwise>
+							<hr color="pink">
+							<h3>${selUser}님환영합니다(*￣3￣)╭</h3>
+							<a href="control_0914.jsp?action=main&selUser=${selUser}">내글목록보기</a>
+							<form action="control_0914.jsp" method="post">
+								<input type="hidden" name="action" value="logout"> 
+								<input type="submit" value="logout">
+							</form>
+						</c:otherwise>
+					</c:choose>
+					<h4>게시물 리스트</h4>
+					<a href="control_0914.jsp?action=main">전체목록보기</a>
+					<hr>
+					<div class="table-wrapper">
+								<table>
+									<thead>
+										<tr>
+											<th>작성자</th>
+											<th>내용</th>
+											<th>♥</th>
+											<th>조회수</th>
+											<th>작성일</th>
+										</tr>
+									</thead>
+								<tbody>
 
-				<!-- Section -->
-				<section>
-					<header class="major">
-						<h2>Introduce my self</h2>
-					</header>
-					<div class="posts">
-						<article>
-							<a href="introduce_ayk.html" class="image"><img
-								src="images/sky3.jpg" alt="분홍빛 구름 하늘" /></a>
-							<h3>AYK</h3>
-							<p>계획을 세워야 마음이 편한 INFJ</p>
-							<ul class="actions">
-								<li><a href="introduce_ayk.html" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
-							<h3>Nulla amet dolore</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
-							<h3>Tempus ullamcorper</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
-							<h3>Sed etiam facilis</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
-							<h3>Feugiat lorem aenean</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
-							<h3>Amet varius aliquam</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
+								<c:forEach var="v" items="${datas}">
+									<c:set var="m" value="${v.m}" />
+									<tr>
+										<td>${m.userid}</td>
+										<td><${m.msg}</td>
+										<td>${m.favcount}</td>
+										<td>${m.replycount}</td>
+										<td>${m.mdate}</td>
+									</tr>
+								<ol>
+								<c:forEach var="r" items="${v.rlist}"> 
+								<li>${r.userid}▶ ${r.rmsg} ${r.rdate}</li> 
+								</c:forEach>
+								</ol>
+								</c:forEach>
+							</tbody>
+							<tfoot>
+							<a href="control_0914.jsp?action=main&mcnt=${mcnt+1}&selUser=${selUser}">more++</a>
+								<tr>
+									<td colspan="5"><c:if test="${selUser!=null}">
+											<form action="control_0914.jsp" method="post">
+												<input type="hidden" name="action" value="posting">
+												<input type="submit" value="글쓰기">
+											</form>
+										</c:if></td>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
+					
 				</section>
 
 			</div>
@@ -177,9 +145,8 @@
 						<input type="text" name="query" id="query" placeholder="Search" />
 					</form>
 				</section>
-				
 
-
+			
 				<!-- Menu -->
 				<nav id="menu">
 					<header class="major">
@@ -192,7 +159,7 @@
 						<li><span class="opener">실습</span>
 							<ul>
 								<li><a href="index.jsp">0907</a></li>
-								<li><a href="index_0914.jsp">0914실습</a></li>
+								<li><a href="#">Tempus Magna</a></li>
 								<li><a href="#">Feugiat Veroeros</a></li>
 							</ul></li>
 						<li><a href="#">Etiam Dolore</a></li>
@@ -209,7 +176,6 @@
 						<li><a href="#">Amet Lacinia</a></li>
 					</ul>
 				</nav>
-
 
 				<!-- Section -->
 				<section>

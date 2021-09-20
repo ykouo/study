@@ -129,7 +129,9 @@
 		}else{
 			throw new Exception(" ※※※ 게시글 삭제 오류발생 ※※※ ");
 		}
-	}else{
+	}
+	
+	else{
 		
 	}
 %>

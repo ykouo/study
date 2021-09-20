@@ -17,12 +17,7 @@
 <html>
 <head>
 <title>main - 로그인 / 리스트 </title>
-<script type="text/javascript">
-function check(pnum){	
-	console.log("여기 들어왔니???"); 
-	document.location.href="control.jsp?action=showpost&pnum="+pnum;
-}
-</script>
+
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -61,18 +56,7 @@ function check(pnum){
 					</header>
 					
 					<h4>로그인</h4>
-					<c:if test="${user==null}">
-						<hr>
-						<button onclick="location.href='login.jsp'">로그인</button>
-						<br>
-						<button onclick="location.href='join.jsp'">회원가입</button>
-						<hr>
-					</c:if>
-					<c:if test="${user!=null}">
-
-						<mytag:logout />
-
-					</c:if>
+					<mytag:login/>
 					<h4>게시물 리스트</h4>
 					<div class="table-wrapper">
 								<table>

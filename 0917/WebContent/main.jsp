@@ -54,7 +54,7 @@ function newWin(){
 <c:forEach var="v" items="${datas}">
 	<c:set var="m" value="${v.m}"/>
   <li>
-    [${m.userid} ▹ ${m.msg}] | [ 좋아요 : ${m.favcount} | 댓글:${m.replycount} | ${m.mdate}] <a href="updatemsg.do?&selUser=${selUser}&mid=${m.mid}&mcnt=${mcnt}">♥</a> <!-- &cnt=${cnt} -->   
+    [${m.userid} ▹ ${m.msg}] | [ 좋아요 : ${m.favcount} | 댓글:${m.replycount} | ${m.mdate}] <a href="updatemsg.do?&mcnt=${mcnt}&selUser=${selUser}&mid=${m.mid}&cnt=${cnt}">♥</a> <!--&mcnt=${mcnt} &cnt=${cnt} -->   
 	
 	<!--  메시지 삭제 태그  -->
 	<mytag:deleteMsg mid="${m.mid}" userid="${m.userid}"/> <!-- custom tag 교체  -->
@@ -83,7 +83,7 @@ function newWin(){
 <hr color="tomato">
 <ol>
 	<c:forEach var="u" items="${newUsers}"> 
-		<li><a href="main.do?&mcnt=${mcnt}&selUser=${u.userid}">${u.userid}</a>님 가입완료</li>
+		<li><a href="main.do?&selUser=${u.userid}">${u.userid}</a>님 가입완료</li> <!-- &mcnt=${mcnt} -->
 	</c:forEach>
 </ol>
 </div>

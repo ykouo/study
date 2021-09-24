@@ -60,7 +60,7 @@ public class UserDAO {
 	public ArrayList<UserVO> selectAll() {
 		ArrayList<UserVO> datas = new ArrayList<UserVO>();
 		conn = DBCP.connect();
-		String sql = "SELECT * FROM USERINFO WHERE ROWNUM <=3";
+		String sql = "SELECT * FROM USERINFO";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();

@@ -33,9 +33,8 @@ public class JoinAction implements Action{
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('회원가입성공!');window.close();</script>");
 			System.out.println("회원가입 성공");
+
 		}
-		
-	
 		return null;	
 	}
 	

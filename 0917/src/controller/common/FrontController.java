@@ -127,7 +127,7 @@ public class FrontController extends HttpServlet {
 			forward.setPath("/error/error404.jsp"); //error.jsp
 		}
 		// 사용자에게 처리된 결과(데이터)를 출력 
-		if (forward != null) {
+		if (forward != null) { // ★ 페이지 이동이 없을때 오류가 나서 
 			if (forward.isRedirect()) { // forward에 들어가있는 전달방식이 redirect이니?
 				response.sendRedirect(forward.getPath()); // 들어가야하는 인자 : 경로 Path
 			} else {

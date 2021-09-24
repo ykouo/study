@@ -4,7 +4,7 @@
 <c:when test="${seUser eq null}">
 <form action="login.do" method ="post" >
 <table>
-	<input type="hidden" name="mcnt" value="${mcnt}">
+	<input type="hidden" name="mcnt" value="${mcnt}"> <!-- 로그인시 페이징 유지를 위해 mcnt 를 받아서 넘긴다. -->
 	<tr>
 		<td>아이디</td>
 		<td><input type="text" name ="userid" placeholder="아이디입력"></td>

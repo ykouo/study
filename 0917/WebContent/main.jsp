@@ -12,7 +12,7 @@
 <!-- 새창띄우기 스크립트 -->
 <script type="text/javascript">
 function newWin(){
-	var url = 'insertUser.jsp';
+	var url = 'insertUser.jsp'; 
 	var option = "top=10, left=10, width=500, height=200";
 	window.open(url,'_blank',option);
 }
@@ -32,7 +32,7 @@ function newWin(){
 <br>
 
 <!-- 총게시물수 & 현재 게시물수 확인하는 부분 -->
-<%-- <h3>총 게시물수 : ${userCnt} 현재게시물수:${cnt}</h3>  --%> 
+<h3>총 게시물수 : ${userCnt} 현재게시물수:${cnt}</h3> 
 <!-- userCnt = getCnt 한 값 즉 , Message 테이블의 총 개수  -->
 <!-- cnt = 더보기를 눌러서 증가한 값  -->
 <!-- 전체목록 시작 -->

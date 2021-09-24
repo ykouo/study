@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 /**
  * Servlet Filter implementation class EncFilter
  */
-@WebFilter({"*.do" , "*.jsp"})
+@WebFilter({"*.do" , "*.jsp"}) // .do 액션들과 .jsp파일들을 가로채 UTF-8을 적용한다.
 public class EncFilter implements Filter {
 
 	private String encoding;
@@ -39,7 +39,7 @@ public class EncFilter implements Filter {
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
-	public void init(FilterConfig fConfig) throws ServletException {
+	public void init(FilterConfig fConfig) throws ServletException { 
 		this.encoding = fConfig.getServletContext().getInitParameter("encoding");
 	}
 

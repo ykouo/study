@@ -60,9 +60,7 @@ public class MainAction implements Action {
 		System.out.println("mcnt : " + mcnt);
 		System.out.println("newUsers : " + newUsers);
 		
-		
-		
-		forward.setRedirect(false); // 헤더 유지..는 되는뎅 그럼 이다음.. 갈라져.. selUser랑 seUser 두갈래로..
+		forward.setRedirect(false); // 헤더 유지
 		forward.setPath("main.jsp");
 		return forward;
 	}

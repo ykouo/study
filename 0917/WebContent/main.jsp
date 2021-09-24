@@ -22,9 +22,11 @@ function newWin(){
 <body>
 <div class = "content">
 <!-- 전체목록보기 -->
-<form action="main.do" method="post">		
+	<a href="main.do"><img alt="Logo" width="50" height="50" src="img/sunflower3.png"></a>
+	
+<!-- <form action="main.do" method="post">		
 	<input class="btn" type="submit" value="전체목록보기">	
-</form>	
+</form>	 -->
 
 <!-- 로그인  -->
 <mytag:login/>

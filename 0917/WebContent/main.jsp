@@ -41,7 +41,7 @@ function newWin(){
 <h2>전체목록</h2>
 
 <!-- 더보기 버튼  -->
-<c:if test="${selUser!=null}">
+<%-- <c:if test="${selUser!=null}">
   	<c:if test="${cnt<userCnt}">  
 	<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}&selUser=${selUser}&cnt=${cnt+2}">더보기+</a>
 	</c:if>
@@ -50,7 +50,7 @@ function newWin(){
  	<c:if test="${cnt<userCnt}">  
 		<a class="plusbtn" href="main.do?&mcnt=${mcnt+2}&cnt=${cnt+2}">더보기+</a>
 	</c:if>
-</c:if>
+</c:if> --%>
 <!-- 게시글 리스트 시작  -->
  <ul class="list">
 <c:forEach var="v" items="${datas}">
@@ -80,6 +80,28 @@ function newWin(){
 	<!--  메시지 등록 태그  -->
 	<mytag:insert type="msg"/> <!-- custom tag 교체  -->
 </c:if>
+
+<!-- 페이징네이션 -->
+<div class="paging">
+<c:url var="action" value="/main.do"/>
+<c:if test="${param.prev}">
+	<a href="${action}?page=${param.beginPage-1}">◀</a>
+</c:if>
+<c:forEach begin="${param.beginPage}" end="${param.endPage}" step ="1" var="index">
+	<c:choose>
+	<c:when test="${param.page==index}">
+	${index}
+	</c:when>
+	<c:otherwise>
+		<a href="${action}?page=${index}">${index}</a>
+	</c:otherwise>
+	</c:choose>
+</c:forEach>
+<c:if test="${param.next}">
+	<a href="${action}?page=${param.endPage+1}">▶</a>
+</c:if>
+</div>
+
 
 <h3>신규회원목록</h3>
 <hr color="tomato">

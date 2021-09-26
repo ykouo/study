@@ -29,6 +29,7 @@ INSERT INTO MESSAGE VALUES ((SELECT NVL(MAX(MID),0)+1 FROM MESSAGE),'an','6¹ø±Û'
 
 SELECT * FROM MESSAGE WHERE USERID ='an';
 SELECT * FROM MESSAGE WHERE ROWNUM <= 5 ORDER BY MID DESC ;
+SELECT * FROM (SELECT ROWNUM AS ROW_NUM, MESSAGE.* FROM MESSAGE) WHERE ROW_NUM<=5;
 -- ================================================================================================
 
 CREATE TABLE REPLY(
@@ -49,6 +50,23 @@ INSERT INTO REPLY VALUES((SELECT NVL(MAX(RID),0)+1 FROM REPLY),?,?,SYSDATE,?)
 -- ================================================================================================
 
 SELECT * FROM MESSAGE WHERE ROWNUM <= 6 ORDER BY MID DESC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 UPDATE MESSAGE SET REPLYCOUNT=REPLYCOUNT-1 WHERE MID=1;
 SELECT * FROM REPLY;

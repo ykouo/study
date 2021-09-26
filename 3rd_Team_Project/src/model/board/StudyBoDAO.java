@@ -45,13 +45,10 @@ public class StudyBoDAO {
 			public StudyBoVO getNoticePost(StudyBoVO vo) {
 				Connection conn = DBCP.connect();
 				PreparedStatement pstmt = null;
+				boolean res =false;
 				StudyBoVO post = null;
 				try {
-					String sql = "UPDATE STUDYBOARD SET CNT=CNT+1 WHERE PNUM=?";
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setInt(1, vo.getPnum());
-					pstmt.executeUpdate();
-
+					
 					String sql1 ="SELECT * FROM STUDYBOARD WHERE PNUM = ?";
 					pstmt = conn.prepareStatement(sql1);
 					pstmt.setInt(1, vo.getPnum());
@@ -67,7 +64,19 @@ public class StudyBoDAO {
 						post.setMid(rs.getString("mid"));
 						post.setCnt(rs.getInt("cnt"));
 						post.setCategory(rs.getString("category"));
-					}rs.close();
+					}
+					String sql = "UPDATE STUDYBOARD SET CNT=CNT+1 WHERE PNUM=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, vo.getPnum());
+					pstmt.executeUpdate();
+					
+					res=true;
+					if (res) {
+						conn.commit();
+					} else {			
+						conn.rollback();
+					}
+					rs.close();
 				}catch(Exception e) {
 					System.out.println("[Exception발생] getStudyPost() 확인!");
 					e.printStackTrace();

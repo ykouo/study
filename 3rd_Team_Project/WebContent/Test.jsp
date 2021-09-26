@@ -48,6 +48,9 @@ function check(pnum){
 			</tr>
 		</c:if>
 		<c:if test="${fpList.size()!=0}">
+			<%-- <c:if test="${curPageNum>3 &&!empty kwd}"> --%>
+			<li><a href="http://localhost:8088/3rd_Team_Project/control.jsp?action=main">◀</a></li>
+			
 			<c:forEach var="vo" items="${fpList}">
 				<tr>
 					<td>${vo.getPnum()}</td>
@@ -59,6 +62,22 @@ function check(pnum){
 					<td>${vo.getPdate()}</td>
 				</tr>
 			</c:forEach>
+			<%-- </c:if> --%>
+			<%-- <c:if test="${curPageNum>3}">
+			<li><a href="http://localhost:8088/3rd_Team_Project/control.jsp?action=main">◀</a></li>
+			
+			<c:forEach var="vo" items="${fpList}">
+				<tr>
+					<td>${vo.getPnum()}</td>
+					<td>${vo.getCategory()}</td>
+					<td><a href="javascript:check(${vo.getPnum()})">${vo.getPtitle()}</a></td>
+					<td>${vo.getMname()}</td>
+					<td>${vo.getPcontent()}</td>
+					<td>${vo.getCnt()}</td>
+					<td>${vo.getPdate()}</td>
+				</tr>
+			</c:forEach>
+			</c:if> --%>
 		</c:if>
 	</table>
 

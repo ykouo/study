@@ -36,7 +36,7 @@
 			</tr>
 			<tr>
 				<td>카테고리</td>
-				<td><%=post.getPcontent()%></td>
+				<td><%=post.getCategory()%></td>
 			</tr>
 			<tr>
 				<td>제목</td>

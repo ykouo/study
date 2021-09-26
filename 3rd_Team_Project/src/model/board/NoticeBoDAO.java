@@ -46,14 +46,12 @@ public class NoticeBoDAO {
 		public NoticeBoVO getNoticePost(NoticeBoVO vo) {
 			Connection conn = DBCP.connect();
 			PreparedStatement pstmt = null;
+			boolean res =false;
 			NoticeBoVO post = null;
 			try {
+				conn.setAutoCommit(false); // 오토커밋 해제
 				System.out.println("getNoticePost() 수행");
-				String sql = "UPDATE NOTICEBOARD SET CNT=CNT+1 WHERE PNUM=?";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, vo.getPnum());
-				pstmt.executeUpdate();
-
+			
 				String sql1 ="SELECT * FROM NOTICEBOARD WHERE PNUM = ?";
 				pstmt = conn.prepareStatement(sql1);
 				pstmt.setInt(1, vo.getPnum());
@@ -69,7 +67,21 @@ public class NoticeBoDAO {
 					post.setMid(rs.getString("mid"));
 					post.setCnt(rs.getInt("cnt"));
 					post.setCategory(rs.getString("category"));
-				}rs.close();
+				}
+				String sql = "UPDATE NOTICEBOARD SET CNT=CNT+1 WHERE PNUM=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, vo.getPnum());
+				pstmt.executeUpdate();
+
+				res=true;
+				if (res) {
+					conn.commit();
+				} else {			
+					conn.rollback();
+				}
+		 
+				
+				rs.close();
 			}catch(Exception e) {
 				System.out.println("[Exception발생] getNoticePost() 확인!");
 				e.printStackTrace();

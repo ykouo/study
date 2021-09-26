@@ -10,10 +10,12 @@
 <jsp:useBean id="freedao" class ="model.board.FreeBoDAO"/>
 <jsp:useBean id="studydao" class ="model.board.StudyBoDAO"/>
 <jsp:useBean id="noticedao" class ="model.board.NoticeBoDAO"/>
+<jsp:useBean id="paging" class ="model.common.Paging"/>
 <!-- setter매핑 -->
 <jsp:setProperty property="*" name="freevo"/>
 <jsp:setProperty property="*" name="studyvo"/>
 <jsp:setProperty property="*" name="noticevo"/>
+
 
 <% 
 	String action = request.getParameter("action");
@@ -22,6 +24,10 @@
 		ArrayList<FreeBoVO> fpList = freedao.getFreePostList();
 		request.setAttribute("fpList", fpList);
 		pageContext.forward("Test.jsp");
+		int blockStartNum = paging.getBlockStartNum();
+		int blockLastNum = paging.getBlockLastNum();
+		int lastPageNum = paging.getLastPageNum();
+	
 	}
 	// 게시글 상세보기 
 	else if(action.equals("showpost")){

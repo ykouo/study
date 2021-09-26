@@ -49,14 +49,11 @@ public class FreeBoDAO {
 	public FreeBoVO getFreePost(FreeBoVO vo) {
 		Connection conn = DBCP.connect();
 		PreparedStatement pstmt = null;
+		boolean res =false;
 		FreeBoVO post = null;
 		try {
+			conn.setAutoCommit(false); // 오토커밋 해제
 			System.out.println("getFreePost() 수행");
-			String sql = "UPDATE FREEBOARD SET CNT=CNT+1 WHERE PNUM=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, vo.getPnum());
-			pstmt.executeUpdate();
-
 			String sql1 ="SELECT * FROM FREEBOARD WHERE PNUM = ?";
 			pstmt = conn.prepareStatement(sql1);
 			pstmt.setInt(1, vo.getPnum());
@@ -72,7 +69,19 @@ public class FreeBoDAO {
 				post.setMid(rs.getString("mid"));
 				post.setCnt(rs.getInt("cnt"));
 				post.setCategory(rs.getString("category"));
-			}rs.close();
+			}
+			String sql = "UPDATE FREEBOARD SET CNT=CNT+1 WHERE PNUM=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getPnum());
+			pstmt.executeUpdate();
+			res=true;
+			if (res) {
+				conn.commit();
+			} else {			
+				conn.rollback();
+			}
+	 
+			rs.close();
 		}catch(Exception e) {
 			System.out.println("[Exception발생] getFreePost() 확인!");
 			e.printStackTrace();
@@ -149,6 +158,40 @@ public class FreeBoDAO {
 		return res;
 	}
 	
-	
+	//페이징네이션을 위한 총 게시글 수를 카운팅하는 메서드 
+	public int getPageCount() {
+		Connection conn = DBCP.connect();
+		PreparedStatement pstmt = null;
+		int pageCount = 0;
+		try {
+			System.out.println("getPageCount() 수행");
+			String sql ="SELECT COUNT(*) FROM FREEBOARD";
+			pstmt=conn.prepareStatement(sql);
+			pageCount = pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			DBCP.disconnect(conn, pstmt);
+		}
+		return pageCount;		
+	}
+	// 검색후 페이징네이션을 위한  총 게시글 수를 카운팅하는 메서드 
+	public int getPageCount(String kwd) {
+		Connection conn = DBCP.connect();
+		PreparedStatement pstmt = null;
+		int pageCount = 0;
+		try {
+			System.out.println("getPageCount() 수행");
+			String sql ="SELECT COUNT(*) FROM FREEBOARD  WHERE PTITLE  LIKE %?%";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,kwd);
+			pageCount = pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+			DBCP.disconnect(conn, pstmt);
+		}
+		return pageCount;		
+	}
 	
 }

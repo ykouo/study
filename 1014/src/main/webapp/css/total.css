@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+*{
+	margin: 0px;
+	padding: 5px;
+}
+a{
+	text-decoration: none;
+}
+.pagenation li{
+	list-style: none;
+	display: inline-block;
+	text-align: left;
+}
+
+.loginBtn{
+	text-align: right;
+}
